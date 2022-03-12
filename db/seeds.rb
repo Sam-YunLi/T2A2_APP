@@ -5,3 +5,21 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+categories = ["Action", "Sport", "RPG", "FPS", "MMO-RPG", "Indivierl"]
+
+if Category.count == 0
+  categories.each do |c|
+    Category.create(name: c)
+    puts "created category #{c}"
+  end
+end
+
+platforms = ["PC Game", "Xbox", "PS4", "PS5", "Nintendo Switch"]
+
+if Platform.count == 0
+  platforms.each do |p|
+    Platform.create(name: p)
+    puts "created platform #{p}"
+  end
+end
