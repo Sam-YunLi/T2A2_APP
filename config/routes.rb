@@ -7,5 +7,6 @@ Rails.application.routes.draw do
   root to: "pages#home"
   get '/restricted', to: "pages#restricted"
   get '/games', to: "games#index", as: 'games'
+  get '/games/:id', to: "games#show", as: 'game'
 
 end

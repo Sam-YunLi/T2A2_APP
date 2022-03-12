@@ -22,12 +22,12 @@ ActiveRecord::Schema.define(version: 2022_03_12_064409) do
   end
 
   create_table "games", force: :cascade do |t|
-    t.string "name"
+    t.string "name", null: false
     t.integer "condition"
-    t.integer "price"
-    t.integer "stock"
+    t.integer "price", null: false
+    t.integer "stock", default: 1
     t.boolean "display", default: true
-    t.text "discription"
+    t.text "description"
     t.bigint "user_id", null: false
     t.bigint "category_id", null: false
     t.bigint "platform_id", null: false
