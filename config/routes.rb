@@ -17,7 +17,7 @@ Rails.application.routes.draw do
   put '/games/:id', to: "games#update"
   patch '/games/:id', to: "games#update"
 
-  delete '/games/:id', to: "games#destroy"
+  delete '/games/:id', to: "games#destroy", as: "delete_game"
 
   get '/games/:id/edit', to: "games#edit", as: 'edit_game'
 

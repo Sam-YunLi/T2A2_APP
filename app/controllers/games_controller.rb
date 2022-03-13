@@ -1,7 +1,9 @@
 class GamesController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
   before_action :set_game, only: [:show, :edit, :update, :destroy]
+  before_action :authorize_user, only: [:edit, :update, :destory]
   before_action :set_form_vars, only: [:new, :edit]
+
 
   # show all the games list
   def index
@@ -10,7 +12,7 @@ class GamesController < ApplicationController
 
   # show the details of the game
   def show
-    @game = Game.find(params[:id])
+    
   end
 
   # create new game
@@ -30,6 +32,10 @@ class GamesController < ApplicationController
     end
   end
 
+  def edit
+
+  end
+
   # update the game information
   def update
     @game = update.(game_params)
@@ -44,7 +50,9 @@ class GamesController < ApplicationController
 
   # delete the game form the game list
   def destroy
-    @game.destory
+    @game.destroy
+    flash[:alert] = "Game been succesfully deleted."
+    redirect_to games_path
   end
 
   private
@@ -53,8 +61,15 @@ class GamesController < ApplicationController
     params.require(:game).permit(:name, :price, :category_id, :condition, :description, :stock, :platform_id, :display, :picture)
   end
 
-  def set_game
+  def authorize_user
+    if @game.user_id != current_user.id
+      flash[:alert] = "You have no authorization for that."
+      redirect_to games_path
+    end
+  end
 
+  def set_game
+    @game = Game.find(params[:id])
   end
 
   def set_form_vars
