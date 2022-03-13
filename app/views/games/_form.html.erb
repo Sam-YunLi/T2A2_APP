@@ -1,0 +1,50 @@
+<%=form_with model: @game, local:true do |f| %>
+  <div class='form-group mb-3'>
+    <%=f.label :name, class: "form-lable" %>
+    <%=f.text_field :name%>
+  </div>
+
+  <div class='form-group mb-3'>
+    <%=f.label :price, class: "form-lable" %>
+    <%=f.number_field :price%>
+  </div>
+
+  <div class='form-group mb-3'>
+    <%=f.label :stock, class: "form-lable" %>
+    <%=f.number_field :stock%>
+  </div>
+
+  <div class='form-group mb-3'>
+    <%=f.label :platform_id, class: "form-lable" %>
+    <%=f.select :platform_id, @platforms.map{|a| [a.name, a.id]}, class: "form-select"%>
+  </div>
+
+  <div class='form-group mb-3'>
+    <%=f.label :category_id, class: "form-lable" %>
+    <%=f.select :category_id, @categories.map{|c| [c.name, c.id]}, class: "form-select"%>
+  </div>
+
+  <%@conditions.each do |option|%>
+    <%=f.radio_button :condition, option, class:"mr-2"%>
+    <%=f.label :condition, format_condition(option), class: "form-lable mr-1"%>
+  <%end%>
+
+
+  <div class='form-group mb-3'>
+    <%=f.label :description, class: "form-lable" %>
+    <%=f.text_area :description, class: "form-control"%>
+  </div>
+
+  <div class='form-group mb-3'>
+    <h6 class="mb-3">Display</h6>
+    <%=f.radio_button :display, true, class: "mr-2" %>
+    <%=f.label :display, "Yes",class: "form-lable" %>
+    <%=f.radio_button :display, false, class: "mr-2" %>
+    <%=f.label :display, "No", class: "form-lable mr-1"%>
+  </div>
+
+  <div class= 'actions'>
+    <%=f.submit%>
+  </div>
+
+<%end%>

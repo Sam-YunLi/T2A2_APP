@@ -4,11 +4,15 @@
   </div>
 
   <ul class="navbar-nav mr-5-lg">
-    <li class="nav-item">
-      <%= link_to "All listings", games_path, class: "nav-link"%>
-    </li>
+
     <%if user_signed_in?%>
-        <span>Hello, <%=current_user.email%></span>
+
+      <span>Hello, <%=current_user.email%></span>
+
+      <li class="nav-item"> 
+        <%=link_to "Create game", new_game_path, class: "nav-link"%>
+      </li>     
+
       <li class="nav-item">
         <%=link_to "Log Out", destroy_user_session_path, method: :delete, class: "nav-link"%>
       </li>
@@ -17,5 +21,8 @@
         <%= link_to "Log in", new_user_session_path, class: "nav-link"%>
       </li>
     <%end%>
+    <li class="nav-item">
+      <%= link_to "All games", games_path, class: "nav-link"%>
+    </li>
   </ul>
 </nav>
