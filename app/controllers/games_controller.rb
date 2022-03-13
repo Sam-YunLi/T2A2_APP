@@ -12,7 +12,29 @@ class GamesController < ApplicationController
 
   # show the details of the game
   def show
-    
+    session = Stripe::Checkout::Session.create(
+      payment_method_types: ['card'],
+      customer_email: current_user && current_user.email,
+      line_items: [
+        {
+          name: @game.name,
+          description: @game.description,
+          amount: @game.price,
+          currency: 'aud',
+          quantity: 1
+        }
+      ],
+      payment_intent_data: { 
+        metadata: { 
+          user_id: current_user && current_user.id,
+          game_id: @game.id
+        }
+      },
+      success_url: root_url,
+      cancel_url: root_url
+    )
+    @session_id = session.id
+
   end
 
   # create new game

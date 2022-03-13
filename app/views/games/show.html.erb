@@ -16,6 +16,7 @@
     <h5 class='text'>Price: <%=format_price(@game.price)%></h5>
     <h6 class='text-muted'>Description: </h6>
     <p class='text-muted'><%=@game.description%></p>
+    <button data-stripe='payment'>Buy: <%=format_price(@game.price)%> </button>
     <div class='container'>
       <%if current_user && current_user.id == @game.user_id%>
         <%= link_to "Edit", edit_game_path(@game.id), class: "btn btn-warning mr-2"%>
@@ -26,3 +27,16 @@
     </div>
   </div>
 </section>
+
+<script src="https://js.stripe.com/v3/"></script>
+<script>
+document
+  .querySelector("[data-stripe='payment']")
+  .addEventListener("click", () => {
+    const stripe = Stripe("<%=Rails.application.credentials.dig(:stripe, :public_key)%>");
+    console.log(stripe);
+    stripe.redirectToCheckout({
+      sessionId: "<%=@session_id%>"
+    })
+  })
+</script>
