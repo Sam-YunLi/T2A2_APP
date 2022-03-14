@@ -1,2 +1,2 @@
-<h1>Congratulations you bought <%=@game.name%></h1>
-<p>Find me in app/views/payments/success.html.erb</p>
+<P> Thanks for buying <%=@order.game.name%><p>
+<%=link_to "View Reciept", @order.receipt_url%>

@@ -23,7 +23,13 @@
         <%= link_to "Delete", @game, method: :delete, data: {confirm: "Are you sure you want delete #{@game.name}?"}, class: "btn btn-danger mr-2"%>
       <%else%>
         <%if current_user && ( @game.display != false || @game.stock.to_i>0 )%>
-          <button data-stripe='payment' class='btn btn-info'>Buy: <%=format_price(@game.price)%> </button>
+          <%=button_to "Buy #{format_price(@game.price)}",
+            create_checkout_session_path,
+            remote: true,
+            method: :post,
+            params: {id: @game.id},
+            class: 'btn btn-primary mb-3 pr-2',
+            data: {disable_with: "Loading..."}%>
         <%elsif @game.stock.to_i < 1 %>
           <button class='btn btn-secondary' disabled> Sold out </button>
         <%elsif @game.display == false %>
@@ -36,15 +42,4 @@
   </div>
 </section>
 
-<script src="https://js.stripe.com/v3/"></script>
-<script>
-document
-  .querySelector("[data-stripe='payment']")
-  .addEventListener("click", () => {
-    const stripe = Stripe("<%=Rails.application.credentials.dig(:stripe, :public_key)%>");
-    console.log(stripe);
-    stripe.redirectToCheckout({
-      sessionId: "<%=@session_id%>"
-    })
-  })
-</script>
+
