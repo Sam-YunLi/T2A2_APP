@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'payments/success'
   get 'games/index'
   get 'games/show'
   devise_for :users
@@ -20,5 +21,10 @@ Rails.application.routes.draw do
   delete '/games/:id', to: "games#destroy", as: "delete_game"
 
   get '/games/:id/edit', to: "games#edit", as: 'edit_game'
+  
+  post 'payments/webhook', to: "payments#webhook"
+
+  get 'payments/success/:id', to: "payments#success", as:"payment_success"
+
 
 end

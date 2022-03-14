@@ -30,7 +30,7 @@ class GamesController < ApplicationController
           game_id: @game.id
         }
       },
-      success_url: root_url,
+      success_url: "#{root_url}/payments/success/#{@game.id}",
       cancel_url: root_url
     )
     @session_id = session.id
@@ -62,7 +62,7 @@ class GamesController < ApplicationController
   def update
     @game = update.(game_params)
     if @game.save
-      redirect_to @game, notice: "Game successfully updated"
+      redirect_to "games", notice: "Game successfully updated"
     else
       pp @game.errors
       set_form_vars

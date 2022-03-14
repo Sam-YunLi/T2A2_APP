@@ -16,13 +16,21 @@
     <h5 class='text'>Price: <%=format_price(@game.price)%></h5>
     <h6 class='text-muted'>Description: </h6>
     <p class='text-muted'><%=@game.description%></p>
-    <button data-stripe='payment'>Buy: <%=format_price(@game.price)%> </button>
+
     <div class='container'>
       <%if current_user && current_user.id == @game.user_id%>
         <%= link_to "Edit", edit_game_path(@game.id), class: "btn btn-warning mr-2"%>
         <%= link_to "Delete", @game, method: :delete, data: {confirm: "Are you sure you want delete #{@game.name}?"}, class: "btn btn-danger mr-2"%>
       <%else%>
-
+        <%if current_user && ( @game.display != false || @game.stock.to_i>0 )%>
+          <button data-stripe='payment' class='btn btn-info'>Buy: <%=format_price(@game.price)%> </button>
+        <%elsif @game.stock.to_i < 1 %>
+          <button class='btn btn-secondary' disabled> Sold out </button>
+        <%elsif @game.display == false %>
+          <button class='btn btn-secondary' disabled> Not available </button>
+        <%else%>
+          <%=button_to "Login to buy", new_user_session_path, class: "btn btn-info"%>
+        <%end%>
       <%end%>
     </div>
   </div>
