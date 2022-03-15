@@ -23,3 +23,12 @@ if Platform.count == 0
     puts "created platform #{p}"
   end
 end
+
+features = ["Action", "Sport", "RPG", "FPS", "MMO-RPG", "Indivierl", "double player"]
+
+if Feature.count == 0
+  features.each do |f|
+    Feature.create(name: f)
+    puts "created feature #{f}"
+  end
+end
