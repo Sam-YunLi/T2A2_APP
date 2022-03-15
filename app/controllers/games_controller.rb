@@ -1,6 +1,7 @@
 class GamesController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
   before_action :set_game, only: [:show, :edit, :update, :destroy]
+  
   before_action :authorize_user, only: [:edit, :update, :destory]
   before_action :set_form_vars, only: [:new, :edit]
 
@@ -26,7 +27,6 @@ class GamesController < ApplicationController
     if @game.save
       redirect_to @game, notice: "Game successfully created"
     else
-      pp @game.errors
       set_form_vars
       render "new", notice: "Something went wrong"
     end
@@ -38,11 +38,10 @@ class GamesController < ApplicationController
 
   # update the game information
   def update
-    @game = update.(game_params)
+    @game.update.(game_params)
     if @game.save
       redirect_to "games", notice: "Game successfully updated"
     else
-      pp @game.errors
       set_form_vars
       render "edit", notice: "Something went wrong"
     end
@@ -51,8 +50,7 @@ class GamesController < ApplicationController
   # delete the game form the game list
   def destroy
     @game.destroy
-    flash[:alert] = "Game been succesfully deleted."
-    redirect_to games_path
+    redirect_to games_path, notice: "Game been succesfully deleted."
   end
 
   private

@@ -10,6 +10,28 @@ class Game < ApplicationRecord
   has_one_attached :picture
 
   # valadations
-  validates :title, :description, :price, :condition, presence: true
+  validates :name, :description, :price, :condition, presence: true
+  validates :name, length: {minimum: 3}
+
+  # sanitise data with lifecycle hooks
+  before_save :remove_whitespace
+  before_save :remove_covid
+  before_validation :convert_price_to_cents, if: :price_changed?
+
+  private
+
+  def remove_whitespace 
+    self.name = self.name.strip
+    self.description = self.description.strip
+  end
   
+  def remove_covid 
+    self.name = self.name.gsub(/covid/i, "pfizer")
+    self.description = self.name.gsub(/covid/i, "pfizer")
+  end
+  
+  def convert_price_to_cents 
+    self.price = (self.attributes_before_type_cast["price"].to_f * 100).round
+  end 
+
 end

@@ -1,4 +1,20 @@
 <%=form_with model: @game, local:true do |f| %>
+
+  <%if @game.errors.any?%>
+    <div class="alert alert-error alert-dismissable fade show">
+      <h3><%=pluralize(@game.errors.count, "error")%> prohibited this listing from being saved </h3>
+      <ul>
+        <%@game.errors.full_messages.each do |message|%>
+          <li><%=message%></li>
+        <%end%>
+      </ul>
+    
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <%end%>
+
   <div class='form-group mb-3'>
     <%=f.label :name, class: "form-lable" %>
     <%=f.text_field :name%>
@@ -6,7 +22,7 @@
 
   <div class='form-group mb-3'>
     <%=f.label :price, class: "form-lable" %>
-    <%=f.number_field :price%>
+    <%=f.number_field :price, step:"0.01"%>
   </div>
 
   <div class='form-group mb-3'>
