@@ -13,11 +13,10 @@ class PaymentsController < ApplicationController
       event = Stripe::Webhook.construct_event(payload, header, secret)
     rescue Stripe::SignatureVerificationError => e
       render jason: {error: "Unauthorised"}, status: 403
-      pp "403------------------------------------------"
+
       return
     rescue JSON::ParserError => e
       render jason: {error: "Bad request"}, status: 422
-      pp "422-------------------------------------------"
       return
     end
 
@@ -45,7 +44,7 @@ class PaymentsController < ApplicationController
 
   def create_checkout_session
     @game = Game.find(params[:id])
-    
+
     session = Stripe::Checkout::Session.create(
       payment_method_types: ['card'],
       customer_email: current_user && current_user.email,
