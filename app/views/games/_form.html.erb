@@ -29,9 +29,17 @@
     <%=f.label :condition, format_condition(option), class: "form-lable mr-1"%>
   <%end%>
 
+  <h5 class="mb-3 ml-2">Features</h5>
+  <div class="form-check form-check-line mb-3 ml-2">
+    <%=f.collection_check_boxes :feature_ids, @features, :id, :name do |b|%>
+      <%=b.label class: 'form-check-label' %>
+      <%=b.check_box class: 'form-check-line mr-2'%>
+    <%end%> 
+  </div>
+
   <%# pictue upload area %>
   <div class='form-group mb-3'>
-    <%=f.label :picture, class: "form-lable" %>
+    <%=f.label :picture, class: "form-lable"%>
     <%=f.file_field :picture, accept: "image/png, image/jpg, image/jpeg", class: "form-select"%>
   </div>
 

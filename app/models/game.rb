@@ -8,4 +8,8 @@ class Game < ApplicationRecord
   # conditions  brand new, gently used, used and still_useable
   enum condition: {brand_new: 1, gently_used: 2, used: 3, still_useable: 4}
   has_one_attached :picture
+
+  # valadations
+  validates :title, :description, :price, :condition, presence: true
+  
 end

@@ -58,7 +58,7 @@ class GamesController < ApplicationController
   private
 
   def game_params
-    params.require(:game).permit(:name, :price, :category_id, :condition, :description, :stock, :platform_id, :display, :picture)
+    params.require(:game).permit(:name, :price, :category_id, :condition, :description, :stock, :platform_id, :display, :picture, feature_ids: [])
   end
 
   def authorize_user
@@ -76,6 +76,7 @@ class GamesController < ApplicationController
     @categories = Category.all
     @platforms = Platform.all
     @conditions = Game.conditions.keys
+    @features = Feature.all
   end
 
 
