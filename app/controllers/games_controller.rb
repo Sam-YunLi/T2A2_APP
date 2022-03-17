@@ -1,14 +1,21 @@
 class GamesController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
+
+  before_action :initialize_session
+  before_action :load_cart
+
+
   before_action :set_game, only: [:show, :edit, :update, :destroy]
   
   before_action :authorize_user, only: [:edit, :update, :destory]
   before_action :set_form_vars, only: [:new, :edit]
 
 
+
+
   # show all the games list
   def index
-    @games = Game.all
+    @games = Game.all # set all the games to display
   end
 
   # show the details of the game
@@ -53,6 +60,19 @@ class GamesController < ApplicationController
     redirect_to games_path, notice: "Game been succesfully deleted."
   end
 
+  # for the cart
+  def add_to_cart
+    id = params[:id].to_i
+    session[:cart] << id unless session[:cart].include?(id)
+    redirect_to games_path
+  end
+
+  def remove_form_cart
+    id = params[:id].to_i
+    session[:cart].delete(id)
+    redirect_to games_path
+  end
+
   private
 
   def game_params
@@ -77,6 +97,12 @@ class GamesController < ApplicationController
     @features = Feature.all
   end
 
+  def initialize_session
+    session[:cart] ||= [] # initialize cart
+  end
 
-
+  def load_cart
+    @cart = Game.find(session[:cart])
+    @cart_ids = session[:cart].map{|a|a.to_i}
+  end
 end

@@ -1,5 +1,6 @@
 class PaymentsController < ApplicationController
   skip_before_action :verify_authenticity_token, only: [:webhook]
+
   def success
     @order = Order.find_by(game_id: params[:id])
   end
@@ -43,27 +44,32 @@ class PaymentsController < ApplicationController
   end
 
   def create_checkout_session
-    @game = Game.find(params[:id])
+    @char_games = Game.find(params[:id])
+
+    @line_items = []
+    @char_games.each do |game|
+      line_item = nil
+      line_item = {
+        name: game.name,
+        description: game.description,
+        amount: game.price,
+        currency: 'aud',
+        quantity: 1,
+      }
+      @line_items << line_item
+    end
+
 
     session = Stripe::Checkout::Session.create(
       payment_method_types: ['card'],
       customer_email: current_user && current_user.email,
-      line_items: [
-        {
-          name: @game.name,
-          description: @game.description,
-          amount: @game.price,
-          currency: 'aud',
-          quantity: 1
-        }
-      ],
+      line_items: @line_items,
       payment_intent_data: { 
         metadata: { 
           user_id: current_user && current_user.id,
-          game_id: @game.id
         }
       },
-      success_url: "#{root_url}/payments/success/#{@game.id}",
+      success_url: root_url,# "#{root_url}/payments/success/#{@game.id}",
       cancel_url: root_url
     )
     @session_id = session.id

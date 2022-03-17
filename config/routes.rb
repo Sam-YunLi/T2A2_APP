@@ -28,5 +28,10 @@ Rails.application.routes.draw do
 
   post "payments", to: "payments#create_checkout_session", as: "create_checkout_session"
 
+  # use post for the add to cart button
+  post 'games/add_to_cart/:id', to: 'games#add_to_cart', as: 'add_to_cart'
+
+  # delete from the cart
+  delete 'games/remove_form_cart/:id', to: 'games#remove_form_cart', as: 'remove_form_cart'
 
 end

@@ -1,4 +1,5 @@
-<%# <h1 class="hero-title text-center">Games </h1> %>
+
+</details>
 <section class="container">
   <div class="row row-cols-sm-1 row-cols-md-2 row-cols-lg-4">
     <%@games.each do |game|%>
@@ -16,13 +17,18 @@
 
           <div class='d-flex justify-content-between'> 
             <h6 class="text-muted"><%=format_condition(game.condition)%></h6>
+            <h6 class="text-muted"><%=game.platform.name%></h6>
             <h5><%=format_price(game.price)%></h5>
           </div>
 
           <div class='d-flex justify-content-between'>
-            <h6 class="text-muted"><%=game.platform.name%></h6>
             <%=link_to "Detail", game_path(game.id), class: "btn btn-outline-primary"%>
-          </div>
+            <%if @cart.include?(game)%>
+              <%= button_to "remove from cart", remove_form_cart_path(game.id), method: :delete, class: "btn btn-outline-primary"%></button>
+            <%else%>
+              <%=link_to "Add to cart", add_to_cart_path(game.id), method: :post, class: "btn btn-outline-primary"%>
+            <%end%>
+          </div> 
 
         </div>
       </div>
