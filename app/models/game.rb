@@ -15,7 +15,6 @@ class Game < ApplicationRecord
 
   # sanitise data with lifecycle hooks
   before_save :remove_whitespace
-  before_save :remove_covid
   before_validation :convert_price_to_cents, if: :price_changed?
 
   private
@@ -23,11 +22,6 @@ class Game < ApplicationRecord
   def remove_whitespace 
     self.name = self.name.strip
     self.description = self.description.strip
-  end
-  
-  def remove_covid 
-    self.name = self.name.gsub(/covid/i, "pfizer")
-    self.description = self.name.gsub(/covid/i, "pfizer")
   end
   
   def convert_price_to_cents 

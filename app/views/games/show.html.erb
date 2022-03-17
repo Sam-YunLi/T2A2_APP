@@ -27,14 +27,19 @@
         <%= link_to "Edit", edit_game_path(@game.id), class: "btn btn-warning mr-2"%>
         <%= link_to "Delete", @game, method: :delete, data: {confirm: "Are you sure you want delete #{@game.name}?"}, class: "btn btn-danger mr-2"%>
       <%else%>
-        <%if current_user && @game.display != false%>
-          <%=button_to "Buy #{format_price(@game.price)}",
-            create_checkout_session_path,
-            remote: true,
-            method: :post,
-            params: {id: [@game.id]},
-            class: 'btn btn-primary mb-3 pr-2',
-            data: {disable_with: "Loading..."}%>
+        <%if current_user && @game.display != false %>
+          <%if @cart.include?(@game)%>
+            <%= button_to "remove from cart", remove_form_cart_path(@game.id), method: :delete, class: 'btn btn-danger mb-3 pr-2'%></button>
+          <%else%>
+            <%=button_to "Buy #{format_price(@game.price)}",
+              create_checkout_session_path,
+              remote: true,
+              method: :post,
+              params: {id: [@game.id]},
+              class: 'btn btn-primary mb-3 pr-2',
+              data: {disable_with: "Loading..."}%>
+            <%=button_to "Add to cart", add_to_cart_path(@game.id), method: :post, class: 'btn btn-danger mb-3 pr-2'%>
+          <%end%>
         <%elsif @game.display == false %>
           <button class='btn btn-secondary' disabled> Sold out </button>
         <%else%>

@@ -29,8 +29,8 @@
       </div>
     <%end%>
 
-    <nav class="navbar navbar-expand-md navbar-dark bg-dark">
-      <a class="navbar-brand">TinyGamestore</a>
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark sticky-top">
+      <%=link_to 'TinyGamestore', root_path, class: "navbar-brand" %>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample04" aria-controls="navbarsExample04" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -49,17 +49,16 @@
           </li>
 
           <%if user_signed_in?%>
-            <li class="nav-item"> 
-              <%=link_to "Create", new_game_path, class: "nav-link"%>
-            </li>     
-
-            <li class="nav-item">
-              <%=link_to "Log Out", destroy_user_session_path, method: :delete, class: "nav-link"%>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><%=current_user.email%></a>
+              <div class="dropdown-menu" aria-labelledby="dropdown04">
+                <%=link_to "My Game", new_game_path, class: "dropdown-item"%>
+                <%=link_to "My Purchased", destroy_user_session_path, method: :delete, class: "dropdown-item"%>
+                <%=link_to "Create New Game", new_game_path, class: "dropdown-item"%>
+                <%=link_to "Log Out", destroy_user_session_path, method: :delete, class: "dropdown-item"%>
+              </div>
             </li>
 
-            <li class="nav-item">
-              <%=link_to current_user.email, new_game_path, class: "nav-link"%>
-            </li>
           <%else%>
             <li class="nav-item">
               <%=link_to "Sing in", new_user_registration_path, class: "nav-link"%>
@@ -69,6 +68,7 @@
               <%=link_to "Log in", new_user_session_path, class: "nav-link"%>
             </li>
           <%end%>
+
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Cart(<%=@cart.count%>)</a>
             <div class="dropdown-menu" aria-labelledby="dropdown04">
@@ -88,7 +88,8 @@
                       method: :post,
                       params: {id: @cart_ids},
                       class: 'btn btn-primary mb-3 pr-2',
-                      data: {disable_with: "Loading..."}%></div>
+                      data: {disable_with: "Loading..."}%>
+                </div>
               <%end%>
             </div>
           </li>

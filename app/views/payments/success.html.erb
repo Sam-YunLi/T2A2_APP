@@ -1,2 +1,8 @@
-<P> Thanks for buying <%=@order.game.name%><p>
-<%=link_to "View Reciept", @order.receipt_url%>
+<P> Thanks You<p>
+<%@games.each do |game|%>
+  <%=game.name%>  <%=game.price%>
+<%end%>
+<hr>
+
+<%@order%>
+<%# <%=link_to "View Reciept", @order.receipt_url%> %>

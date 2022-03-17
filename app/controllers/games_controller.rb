@@ -1,17 +1,10 @@
 class GamesController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
 
-  before_action :initialize_session
-  before_action :load_cart
-
-
   before_action :set_game, only: [:show, :edit, :update, :destroy]
   
   before_action :authorize_user, only: [:edit, :update, :destory]
   before_action :set_form_vars, only: [:new, :edit]
-
-
-
 
   # show all the games list
   def index
@@ -20,12 +13,11 @@ class GamesController < ApplicationController
     if params[:search]
       @search_term = params[:search]
       @games = @games.search_by(@search_term)
-      
+
       if @games=[]
         redirect_to games_path, notice: "Sorry, nothing match #{params[:search]}."
       end
     end
-
   end
 
   # show the details of the game
@@ -55,9 +47,9 @@ class GamesController < ApplicationController
 
   # update the game information
   def update
-    @game.update.(game_params)
+    @game.update(game_params)
     if @game.save
-      redirect_to "games", notice: "Game successfully updated"
+      redirect_to games_path, notice: "Game successfully updated"
     else
       set_form_vars
       render "edit", notice: "Something went wrong"
@@ -70,31 +62,12 @@ class GamesController < ApplicationController
     redirect_to games_path, notice: "Game been succesfully deleted."
   end
 
-  # for the cart
-  def add_to_cart
-    id = params[:id].to_i
-    session[:cart] << id unless session[:cart].include?(id)
-    redirect_to games_path
-  end
-
-  def remove_form_cart
-    id = params[:id].to_i
-    session[:cart].delete(id)
-    redirect_to games_path
-  end
-
-  def clear_cart
-    session[:cart] = []
-    @cart = []
-    @cart_ids = []
-    
-    redirect_to games_path
-  end
+  
 
   private
 
   def game_params
-    params.require(:game).permit(:name, :price, :category_id, :condition, :description, :stock, :platform_id, :display, :picture, feature_ids: [])
+    params.require(:game).permit(:name, :price, :category_id, :condition, :description, :platform_id, :display, :picture, feature_ids: [])
   end
 
   def authorize_user
@@ -115,12 +88,4 @@ class GamesController < ApplicationController
     @features = Feature.all
   end
 
-  def initialize_session
-    session[:cart] ||= [] # initialize cart
-  end
-
-  def load_cart
-    @cart = Game.find(session[:cart])
-    @cart_ids = session[:cart].map{|a|a.to_i}
-  end
 end
