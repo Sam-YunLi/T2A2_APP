@@ -20,13 +20,11 @@ class GamesController < ApplicationController
     if params[:search]
       @search_term = params[:search]
       @games = @games.search_by(@search_term)
+      
       if @games=[]
         redirect_to games_path, notice: "Sorry, nothing match #{params[:search]}."
       end
     end
-
-
-
 
   end
 
