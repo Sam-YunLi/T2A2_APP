@@ -85,6 +85,14 @@ class GamesController < ApplicationController
     redirect_to games_path
   end
 
+  def clear_cart
+    session[:cart] = []
+    @cart = []
+    @cart_ids = []
+    
+    redirect_to games_path
+  end
+
   private
 
   def game_params

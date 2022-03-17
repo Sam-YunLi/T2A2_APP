@@ -69,6 +69,29 @@
               <%=link_to "Log in", new_user_session_path, class: "nav-link"%>
             </li>
           <%end%>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Cart(<%=@cart.count%>)</a>
+            <div class="dropdown-menu" aria-labelledby="dropdown04">
+              <%if @cart.empty? %>
+                <a class="dropdown-item">No item yet</a>
+              <%else%>
+                <% @cart.each do |game|%>
+                  <div class="dropdown-item">
+                    <%=game.name%> <%=format_price(game.price)%> <%=link_to "X", remove_form_cart_path(game.id), method: :delete, class: "btn btn-outline-primary"%>
+                  </div>
+                <%end%>
+                <div class="dropdown-item">
+                  <%=button_to "Clear cart", clear_cart_path(@cart_ids), method: :delete, class: "btn btn-outline-primary"%>
+                  <%=button_to "Check out",
+                      create_checkout_session_path,
+                      remote: true,
+                      method: :post,
+                      params: {id: @cart_ids},
+                      class: 'btn btn-primary mb-3 pr-2',
+                      data: {disable_with: "Loading..."}%></div>
+              <%end%>
+            </div>
+          </li>
         </ul>
       </div>
     </nav>

@@ -34,4 +34,7 @@ Rails.application.routes.draw do
   # delete from the cart
   delete 'games/remove_form_cart/:id', to: 'games#remove_form_cart', as: 'remove_form_cart'
 
+  # clear cart
+  delete 'games/clear_cart/:id', to: 'games#clear_cart', as: 'clear_cart'
+
 end
