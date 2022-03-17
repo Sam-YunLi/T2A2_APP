@@ -16,6 +16,18 @@ class GamesController < ApplicationController
   # show all the games list
   def index
     @games = Game.all # set all the games to display
+
+    if params[:search]
+      @search_term = params[:search]
+      @games = @games.search_by(@search_term)
+      if @games=[]
+        redirect_to games_path, notice: "Sorry, nothing match #{params[:search]}."
+      end
+    end
+
+
+
+
   end
 
   # show the details of the game

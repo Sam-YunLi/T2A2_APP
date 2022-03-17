@@ -1,28 +1,43 @@
-<nav class="navbar navbar-light navbar-expand-md sticky-top">
+<nav class="navbar navbar-expand navbar-dark bg-dark" aria-label="Second navbar example">
   <div class="container-fluid">
-    <%=link_to "Gamestore", root_path, class: "navbar-brand"%>
+    <a class="navbar-brand" href="#">TinyGamestore</a>
+     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample02" aria-controls="navbarsExample02" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+    <div class="collapse navbar-collapse" id="navbarsExample02">
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="#">Home</a>
+        </li>
+
+        <%# search bar %>
+        <%=form_for "", url: games_path, role: "search", method: :get do%>
+          <%= text_field_tag :search, @search_term, placeholder: "Search...", class: "form-control"%>
+        <%end%>
+
+        <%if user_signed_in?%>
+          <li class="nav-item"> 
+            <%=link_to "Create", new_game_path, class: "nav-link"%>
+          </li>     
+
+          <li class="nav-item">
+            <%=link_to "Log Out", destroy_user_session_path, method: :delete, class: "nav-link"%>
+          </li>
+        <%else%>
+          <li class="nav-item">
+            <%=link_to "Sing in", new_user_registration_path, class: "nav-link"%>
+          </li>
+
+          <li class="nav-item">
+            <%=link_to "Log in", new_user_session_path, class: "nav-link"%>
+          </li>
+
+          <li class="nav-item">
+
+          </li>
+        <%end%>
+      </ul>
+    </div>
   </div>
-
-  <ul class="navbar-nav mr-5-lg">
-
-    <%if user_signed_in?%>
-
-      <span>Hello, <%=current_user.email%></span>
-
-      <li class="nav-item"> 
-        <%=link_to "Create game", new_game_path, class: "nav-link"%>
-      </li>     
-
-      <li class="nav-item">
-        <%=link_to "Log Out", destroy_user_session_path, method: :delete, class: "nav-link"%>
-      </li>
-    <%else%>
-      <li class="nav-item">
-        <%= link_to "Log in", new_user_session_path, class: "nav-link"%>
-      </li>
-    <%end%>
-    <li class="nav-item">
-      <%= link_to "All games", games_path, class: "nav-link"%>
-    </li>
-  </ul>
 </nav>

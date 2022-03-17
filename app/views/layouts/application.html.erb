@@ -1,8 +1,12 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Gamestore</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="T2A2 application">
+    <meta name="author" content="Yun Li">
+    <title>TinyGamestore</title>
+
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
@@ -22,6 +26,8 @@
       </div>
     <%end%>
     <%= render "shared/navbar" %>
-    <%= yield %>
+    <main class="container">
+          <%= yield %>
+    </main>
   </body>
 </html>
