@@ -28,7 +28,7 @@ class Game < ApplicationRecord
     self.price = (self.attributes_before_type_cast["price"].to_f * 100).round
   end 
 
-  def self.search_by(search_term)
-    where("LOWER(name) LIKE ? OR LOWER(description) LIKE ?", "%#{search_term.downcase}%", "%#{search_term.downcase}%")
-  end
+  # def self.search_by(search_term)
+  #   where("LOWER(name) LIKE ? OR LOWER(description) LIKE ?", "%#{search_term.downcase}%", "%#{search_term.downcase}%")
+  # end
 end

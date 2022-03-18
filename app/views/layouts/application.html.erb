@@ -15,7 +15,7 @@
   
     <script src="https://js.stripe.com/v3/"></script>
 
-    <link href="navbar.css" rel="stylesheet">
+    <%# <link href="navbar.css" rel="stylesheet"> %>
 
   </head>
 
@@ -37,16 +37,16 @@
       
       <div class="collapse navbar-collapse" id="navbarsExample04">
         <ul class="navbar-nav mr-auto">
+          <li>
+            <%=form_for "", url: games_path, role: "search", method: :get do%>
+              <%= text_field_tag :search, @search_term, placeholder: "Search...", class: "form-control nav-item"%>
+            <%end%>
+          </li>
+          
           <li class="nav-item active">
               <%=link_to "All games", games_path, class: "nav-link"%>
           </li>
 
-          <%# search bar %>
-          <li class="nav-item">
-            <%=form_for "", url: games_path, role: "search", method: :get do%>
-              <%= text_field_tag :search, @search_term, placeholder: "Search...", class: "form-control"%>
-            <%end%>
-          </li>
 
           <%if user_signed_in?%>
             <li class="nav-item dropdown">
@@ -61,7 +61,7 @@
 
           <%else%>
             <li class="nav-item">
-              <%=link_to "Sing in", new_user_registration_path, class: "nav-link"%>
+              <%=link_to "Sing up", new_user_registration_path, class: "nav-link"%>
             </li>
 
             <li class="nav-item">
@@ -91,6 +91,7 @@
                       data: {disable_with: "Loading..."}%>
                 </div>
               <%end%>
+              <%# search bar %>
             </div>
           </li>
         </ul>

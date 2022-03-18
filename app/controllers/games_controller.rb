@@ -8,17 +8,24 @@ class GamesController < ApplicationController
 
   # show all the games list
   def index
-    @games = Game.all # set all the games to display
-
     if params[:search]
-      @search_term = params[:search]
-      @games = @games.search_by(@search_term)
+      @search_term = params[:search].to_s
+      @games = Game.where("LOWER(name) LIKE ? OR LOWER(description) LIKE ?", "%#{@search_term.downcase}%", "%#{@search_term.downcase}%")
 
-      if @games=[]
-        redirect_to games_path, notice: "Sorry, nothing match #{params[:search]}."
-      end
+      pp "********************************"
+      pp @search_term.downcase
+      pp Game.where("LOWER(name) LIKE ? OR LOWER(description) LIKE ?", "%#{@search_term.downcase}%", "%#{@search_term.downcase}%")
+      pp "********************************"
+
+      # if @games=[]
+      #   redirect_to games_path, notice: "Sorry, nothing match #{params[:search]}."
+      # end
+    else
+      @games = Game.all # set all the games to display
     end
   end
+
+
 
   # show the details of the game
   def show
