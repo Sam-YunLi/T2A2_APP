@@ -7,10 +7,7 @@ class PaymentsController < ApplicationController
    else
       @games = [Game.find(params[:id])]
    end
-    
-    
-
-
+    # clean cart after pay
     session[:cart] = []
     @cart = []
     @cart_ids = []
@@ -46,13 +43,6 @@ class PaymentsController < ApplicationController
     else
       @games = [Game.find(game_id)]
     end
-    
-    pp "*****************************"
-    pp game_id
-    pp buyer_id
-    pp payment_intent_id
-    pp receipt_url
-    pp "*****************************"
 
     @games.each do |game|
       game.display = false
@@ -107,9 +97,6 @@ class PaymentsController < ApplicationController
       cancel_url: root_url
     )
     @session_id = session.id
-    pp "****************************************************************"
-    pp @game_ids
-    pp "****************************************************************"
 
   end
 end
