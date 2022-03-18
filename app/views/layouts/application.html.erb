@@ -52,8 +52,8 @@
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><%=current_user.email%></a>
               <div class="dropdown-menu" aria-labelledby="dropdown04">
-                <%=link_to "My Game", new_game_path, class: "dropdown-item"%>
-                <%=link_to "My Purchased", destroy_user_session_path, method: :delete, class: "dropdown-item"%>
+                <%=link_to "My Game", my_game_path(id: current_user.id), class: "dropdown-item"%>
+                <%=link_to "My Purchased", purchased_path(id: current_user.id), class: "dropdown-item"%>
                 <%=link_to "Create New Game", new_game_path, class: "dropdown-item"%>
                 <%=link_to "Log Out", destroy_user_session_path, method: :delete, class: "dropdown-item"%>
               </div>

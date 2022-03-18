@@ -69,7 +69,16 @@ class GamesController < ApplicationController
     redirect_to games_path, notice: "Game been succesfully deleted."
   end
 
-  
+  def mygame
+    @games = []
+    @games << Game.find_by(user_id: params[:id])
+  end
+
+  def purchased
+    @orders = [] 
+    @orders << Order.find_by(buyer_id: params[:id])
+    
+  end
 
   private
 
