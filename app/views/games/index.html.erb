@@ -1,0 +1,65 @@
+<section class="container">
+  <div class="row row-cols-sm-1 row-cols-md-2 row-cols-lg-4">
+    <%@games.each do |game|%>
+    <div class="col mb-4">
+      <div class="card border-dark h-100">
+        <div class="card-title">
+          <%if game.picture.attached?%>
+            <%= image_tag game.picture, alt: game.name, class: "thumbnail card-img top"%>
+          <%else%>
+            <%= image_tag "elder-ring.jpg", alt: game.name, class: "thumbnail card-img top"%>      
+          <%end%>
+        </div>
+
+        <div class="card-body">
+
+          <h5 class="text-center"><%=game.name%></h5>
+
+          <%game.features.each do |feature|%>
+            <span class='badge badge-pill badge-primary'><%=feature.name%></span>
+          <%end%>
+
+          <div class='d-flex justify-content-between'> 
+            <h6 class="text-muted"><%=format_condition(game.condition)%></h6>
+            <h6 class="text-muted"><%=game.platform.name%></h6>
+          </div>
+
+          <div class='d-flex justify-content-between'>
+            <h5><%=format_price(game.price)%></h5>
+            <%=link_to "Detail", game_path(game.id), class: "btn btn-primary"%>
+          </div>
+
+          <div class='d-flex justify-content-between'>
+            <%if @cart.include?(game)%>
+              <a></a>
+              <%= button_to "remove from cart", remove_form_cart_path(game.id), method: :delete, class: 'btn btn-danger mb-3 pr-2'%></button>
+            
+            <%elsif current_user && current_user.id == game.user_id%>
+              <%= link_to "Edit", edit_game_path(game.id), class: "btn btn-warning mr-2"%>
+              <%= link_to "Delete", game, method: :delete, data: {confirm: "Are you sure you want delete #{game.name}?"}, class: "btn btn-danger mr-2"%>
+
+            <%elsif current_user && (game.display != false) %>
+              <%=button_to "Buy",
+                create_checkout_session_path,
+                remote: true,
+                method: :post,
+                params: {id: [game.id]},
+                class: 'btn btn-warning mb-3 pr-2',
+                data: {disable_with: "Loading..."}%>
+              <%=button_to "Add to cart", add_to_cart_path(game.id), method: :post, class: 'btn btn-danger mb-3 pr-2'%>
+            <%elsif game.display == false %>
+              <a></a>
+              <button class='btn btn-secondary' disabled> Sold out </button>
+            <%else%>
+              <a></a>
+              <%=button_to "Login to buy", new_user_session_path, class: "btn btn-info"%>
+            <%end%>
+          </div> 
+
+        </div>
+      </div>
+    </div>
+    <%end%>
+  </div>
+
+</section>

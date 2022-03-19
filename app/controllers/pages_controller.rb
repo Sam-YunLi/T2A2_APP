@@ -9,4 +9,8 @@ class PagesController < ApplicationController
 
     end
 
+    def owned_game
+      
+    end
+
 end

@@ -1,0 +1,79 @@
+<%=form_with model: @game, local:true do |f| %>
+
+  <%if @game.errors.any?%>
+    <div class="alert alert-error alert-dismissable fade show">
+      <h3><%=pluralize(@game.errors.count, "error")%> prohibited this listing from being saved </h3>
+      <ul>
+        <%@game.errors.full_messages.each do |message|%>
+          <li><%=message%></li>
+        <%end%>
+      </ul>
+    
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <%end%>
+
+  <div class='form-group mb-3'>
+    <%=f.label :name, class: "form-lable" %>
+    <%=f.text_field :name%>
+  </div>
+
+  <div class='form-group mb-3'>
+    <%=f.label :price, class: "form-lable" %>
+    <%=f.number_field :price, step:"0.01"%>
+  </div>
+
+  <%# <div class='form-group mb-3'>
+    <%=f.label :stock, class: "form-lable" %>
+    <%# <%=f.number_field :stock%>
+  <%# </div> %>
+
+  <div class='form-group mb-3'>
+    <%=f.label :platform_id, class: "form-lable" %>
+    <%=f.select :platform_id, @platforms.map{|a| [a.name, a.id]}, class: "form-select"%>
+  </div>
+
+  <div class='form-group mb-3'>
+    <%=f.label :category_id, class: "form-lable" %>
+    <%=f.select :category_id, @categories.map{|c| [c.name, c.id]}, class: "form-select"%>
+  </div>
+
+  <%@conditions.each do |option|%>
+    <%=f.radio_button :condition, option, class:"mr-2"%>
+    <%=f.label :condition, format_condition(option), class: "form-lable mr-1"%>
+  <%end%>
+
+  <h5 class="mb-3 ml-2">Features</h5>
+  <div class="form-check form-check-line mb-3 ml-2">
+    <%=f.collection_check_boxes :feature_ids, @features, :id, :name do |b|%>
+      <%=b.label class: 'form-check-label' %>
+      <%=b.check_box class: 'form-check-line mr-2'%>
+    <%end%> 
+  </div>
+
+  <%# pictue upload area %>
+  <div class='form-group mb-3'>
+    <%=f.label :picture, class: "form-lable"%>
+    <%=f.file_field :picture, accept: "image/png, image/jpg, image/jpeg", class: "form-select"%>
+  </div>
+
+  <div class='form-group mb-3'>
+    <%=f.label :description, class: "form-lable" %>
+    <%=f.text_area :description, class: "form-control"%>
+  </div>
+
+  <div class='form-group mb-3'>
+    <h6 class="mb-3">Display</h6>
+    <%=f.radio_button :display, true, class: "mr-2" %>
+    <%=f.label :display, "Yes",class: "form-lable" %>
+    <%=f.radio_button :display, false, class: "mr-2" %>
+    <%=f.label :display, "No", class: "form-lable mr-1"%>
+  </div>
+
+  <div class= 'actions'>
+    <%=f.submit%>
+  </div>
+
+<%end%>
