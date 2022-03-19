@@ -50,7 +50,7 @@ class PaymentsController < ApplicationController
       
       # create order and track the information
       Order.create(
-        game_id: game_id, 
+        game_id: game.id, 
         buyer_id: buyer_id, 
         seller_id: game.user_id, 
         payment_id: payment_intent_id, 
@@ -73,7 +73,9 @@ class PaymentsController < ApplicationController
         currency: 'aud',
         quantity: 1,
       }
+
       @line_items << line_item
+
       if @game_ids == ""
         @game_ids = "#{game.id}"
       else
