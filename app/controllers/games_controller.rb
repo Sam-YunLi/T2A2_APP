@@ -6,8 +6,8 @@ class GamesController < ApplicationController
 
   # show all the games list
   def index
-
-    # search bar, search the list    
+    
+    # search bar, search the list
     if params[:search]
       @search_term = params[:search]
       @games = Game.search_by(@search_term)
