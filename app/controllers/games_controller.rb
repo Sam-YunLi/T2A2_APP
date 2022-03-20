@@ -63,16 +63,13 @@ class GamesController < ApplicationController
 
   def mygame
     @games = []
-    @games << Game.find_by(user_id: params[:id])
+    @games = Game.where(user_id: params[:id]).to_a
   end
 
   def purchased
     @orders = [] 
-    @orders << Order.find_by(buyer_id: params[:id])
+    @orders = Order.where(buyer_id: params[:id]).to_a
 
-    pp "**********"
-    pp @orders
-    pp "********************************"
   end
 
   private
