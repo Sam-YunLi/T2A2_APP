@@ -6,7 +6,7 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-categories = ["Action", "Sport", "RPG", "FPS", "MMO-RPG", "Indivierl", ""]
+categories = ["Action", "Sport", "RPG", "FPS", "MMO-RPG", "Others"]
 
 if Category.count == 0
   categories.each do |c|
@@ -24,7 +24,7 @@ if Platform.count == 0
   end
 end
 
-features = ["Action", "Sport", "RPG", "FPS", "MMO-RPG", "Indivierl", "double player"]
+features = ["Single player", "Double player", "Online game", "A3", "Small", "Indivierl", "Popular"]
 
 if Feature.count == 0
   features.each do |f|

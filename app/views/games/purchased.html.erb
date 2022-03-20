@@ -1,9 +1,12 @@
 <h1> My purchase</h1>
 <ul>
-    <%@orders.each do |order|%>
-      <li> <%=Game.find(order.game_id).name%>  <%=format_price(Game.find(order.game_id).price)%>   receipt: <%=link_to "Reciept", order.receipt_url%>
-        <%=link_to "Detail", game_path(order.game_id), class: "btn btn-primary"%>
+  <%if @orders != [nil]%>
+    <% @orders.to_a.each do |order| %>
+      <li><%=Game.find(order[:game_id]).name%>  <%=format_price(Game.find(order[:game_id]).price)%>   receipt: <%=link_to "Reciept", order[:receipt_url]%>
+        <%=link_to "Detail", game_path(order[:game_id]), class: "btn btn-primary"%>
       </li>
     <%end%>
-
+  <%else%>
+    <p>Don't bought any game yet.</p>
+  <%end%>
 </ul>

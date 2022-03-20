@@ -1,9 +1,13 @@
 <h1> My Game </h1>
 <ul>
-  <%@games.each do |game|%>
-    <li> <%=game.name%>  <%=game.description%>     <%=format_price(game.price)%>
-      <%= link_to "Edit", edit_game_path(game.id), class: "btn btn-warning mr-2"%>
-      <%= link_to "Delete", game, method: :delete, data: {confirm: "Are you sure you want delete #{game.name}?"}, class: "btn btn-danger mr-2"%>
-    </li>
+  <%if @games != [nil]%>
+    <%@games.each do |game|%>
+      <li> <%=game[:name]%>  <%=format_price(game[:price])%>
+        <%= link_to "Edit", edit_game_path(game[:id]), class: "btn btn-warning mr-2"%>
+        <%= link_to "Delete", game, method: :delete, data: {confirm: "Are you sure you want delete #{game[:name]}?"}, class: "btn btn-danger mr-2"%>
+      </li>
+    <%end%>
+  <%else%>
+    <p>Don't create any game yet.</p>
   <%end%>
 </ul>

@@ -15,7 +15,7 @@ class Game < ApplicationRecord
 
   # sanitise data with lifecycle hooks
   before_save :remove_whitespace
-  before_validation :convert_price_to_cents, if: :price_changed?
+  before_validation :convert_price_to_cents , if: :price_changed?
 
   private
 

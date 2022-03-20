@@ -1,16 +1,13 @@
 class PagesController < ApplicationController
-    before_action :authenticate_user!, only: [:restricted]
+  before_action :authenticate_user!, only: [:restricted]
 
-    def home
+  def home
 
-    end
-    
-    def restricted
+  end
+  
+  def restricted
 
-    end
+  end
 
-    def owned_game
-      
-    end
 
 end

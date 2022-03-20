@@ -4,7 +4,7 @@ class CreateGames < ActiveRecord::Migration[6.1]
       t.string :name, null: false
       t.integer :condition
       t.integer :price, null: false
-      t.integer :stock, default: 1
+      # t.integer :stock, default: 1
       t.boolean :display, default: true
       t.text :description
       t.references :user, null: false, foreign_key: true
