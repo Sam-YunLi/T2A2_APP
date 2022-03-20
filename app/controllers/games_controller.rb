@@ -1,8 +1,6 @@
 class GamesController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
-
   before_action :set_game, only: [:show, :edit, :update, :destroy]
-  
   before_action :authorize_user, only: [:edit, :update, :destory]
   before_action :set_form_vars, only: [:new, :edit]
 
@@ -43,7 +41,7 @@ class GamesController < ApplicationController
   end
 
   def edit
-
+    @game.price = @game.price.to_f/100
   end
 
   # update the game information
@@ -71,7 +69,10 @@ class GamesController < ApplicationController
   def purchased
     @orders = [] 
     @orders << Order.find_by(buyer_id: params[:id])
-    
+
+    pp "**********"
+    pp @orders
+    pp "********************************"
   end
 
   private

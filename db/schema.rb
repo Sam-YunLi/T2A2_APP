@@ -49,6 +49,12 @@ ActiveRecord::Schema.define(version: 2022_03_15_042829) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "platforms", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+  
   create_table "features", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
@@ -68,7 +74,7 @@ ActiveRecord::Schema.define(version: 2022_03_15_042829) do
     t.string "name", null: false
     t.integer "condition"
     t.integer "price", null: false
-    t.integer "stock", default: 1
+    # t.integer "stock", default: 1
     t.boolean "display", default: true
     t.text "description"
     t.bigint "user_id", null: false
@@ -92,12 +98,6 @@ ActiveRecord::Schema.define(version: 2022_03_15_042829) do
     t.index ["buyer_id"], name: "index_orders_on_buyer_id"
     t.index ["game_id"], name: "index_orders_on_game_id"
     t.index ["seller_id"], name: "index_orders_on_seller_id"
-  end
-
-  create_table "platforms", force: :cascade do |t|
-    t.string "name"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "users", force: :cascade do |t|
